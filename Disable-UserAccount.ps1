@@ -1,6 +1,8 @@
-﻿Function Disable-UserAccount {
+Function Disable-UserAccount {
  [CmdletBinding()]
-Param( [Parameter(Mandatory = $true,HelpMessage = "Enter 'First Last'")]$UserName 
+ Param( [Parameter(Mandatory = $true,HelpMessage = "Enter 'First Last'")]$UserName,
+        [Parameter(Mandatory = $false,HelpMessage = 'Enter OU')]$OU = 'Accounts',
+        [Parameter(Mandatory = $false,HelpMessage = 'Enter server name')]$Server = 'DC01.posh.net'
 )
-    Set-ADObject -Identity:"CN=$UserName,OU=Edina,OU=Accounts,DC=tcbmn,DC=net" -Replace:@{"userAccountControl"="514"} -Server:"EDDC01.tcbmn.net"
+    Set-ADObject -Identity:"CN=$UserName,OU=$OU,DC=posh,DC=net" -Replace:@{"userAccountControl"="514"} -Server:$Server
 }
